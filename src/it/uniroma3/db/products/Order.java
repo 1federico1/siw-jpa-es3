@@ -60,8 +60,8 @@ public class Order {
 		this.customer = customer;
 	}
 
-	public void setCreationTime(Date creationDate) {
-		this.creationTime = creationDate;
+	public void setCreationTime(Date creationTime) {
+		this.creationTime = creationTime;
 	}
 
 	public List<OrderLine> getOrderLines() {
