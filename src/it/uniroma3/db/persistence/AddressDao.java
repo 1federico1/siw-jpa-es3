@@ -55,10 +55,4 @@ public class AddressDao {
 		em.close();
 		return a;
 	}
-	
-	public void closeEmf() {
-		this.emf.close();
-	}
-
-
 }
