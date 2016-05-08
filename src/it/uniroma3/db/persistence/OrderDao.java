@@ -8,7 +8,7 @@ import javax.persistence.EntityTransaction;
 
 import it.uniroma3.db.products.Order;
 
-public class OrderDao {
+public class OrderDao implements Dao<Order>{
 	private  EntityManagerFactory emf;
 	private static EntityManager em;
 	private static EntityTransaction tx;

@@ -8,7 +8,7 @@ import javax.persistence.EntityTransaction;
 
 import it.uniroma3.db.products.Customer;
 
-public class CustomerDao {
+public class CustomerDao implements Dao<Customer>{
 	private  EntityManagerFactory emf;
 	private static EntityManager em;
 	private static EntityTransaction tx;
