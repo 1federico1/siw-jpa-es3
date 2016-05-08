@@ -1,8 +1,5 @@
 package it.uniroma3.db.products;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,63 +7,70 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "order_line")
 
 public class OrderLine {
-	
+
 	public OrderLine() {
-		this.products = new ArrayList<>();
 	}
-	
+
 	public OrderLine(Integer quantity, Float unitPrice) {
-		this.products = new ArrayList<>();
 		this.unitPrice = unitPrice;
 		this.quantity = quantity;
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private Float unitPrice;
-	
+
 	@Column(nullable = false)
 	private Integer quantity;
-	
-	@OneToMany(fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
-	@JoinColumn(name = "products_id")
-	private List<Product> products;
-	
+
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	private Product product;
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public Float getUnitPrice() {
 		return unitPrice;
 	}
+
 	public void setUnitPrice(Float unitPrice) {
 		this.unitPrice = unitPrice;
 	}
+
 	public Integer getQuantity() {
 		return quantity;
 	}
+
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 	
-	
-	
-	public void addProduct(Product p) {
-		this.products.add(p);
+	public void setProduct(Product product) {
+		this.product = product;
 	}
+	
+
+	@Override
+	public String toString() {
+		return "OrderLine [getId()=" + getId() + ", getUnitPrice()=" + getUnitPrice() + ", getQuantity()="
+				+ getQuantity();
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -76,6 +80,7 @@ public class OrderLine {
 		result = prime * result + ((unitPrice == null) ? 0 : unitPrice.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -102,9 +107,5 @@ public class OrderLine {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
 
 }

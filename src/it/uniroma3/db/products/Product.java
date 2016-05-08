@@ -3,22 +3,23 @@ package it.uniroma3.db.products;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Product {
 
 	public Product() {
-		// TODO Auto-generated constructor stub
+		this.orderLines = new ArrayList<>();
 	}
-	
-	
 
 	public Product(String name, String description, Float price, String code) {
 		super();
@@ -27,9 +28,8 @@ public class Product {
 		this.price = price;
 		this.code = code;
 		this.providers = new ArrayList<>();
+		this.orderLines = new ArrayList<>();
 	}
-
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,10 +37,10 @@ public class Product {
 
 	@Column(nullable = false)
 	private String name;
-	
+
 	@Column(nullable = false)
 	private String description;
-	
+
 	@Column(nullable = false)
 	private Float price;
 
@@ -49,6 +49,9 @@ public class Product {
 
 	@ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)
 	private List<Provider> providers;
+	
+	@OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	private List<OrderLine> orderLines;
 
 	public Long getId() {
 		return id;
@@ -96,6 +99,10 @@ public class Product {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+	
+	public void addOrderLine(OrderLine ol) {
+		this.orderLines.add(ol);
 	}
 
 	@Override

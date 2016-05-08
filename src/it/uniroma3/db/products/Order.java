@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -19,7 +20,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "orders")
-
+@NamedNativeQuery(name = "Order.findAll", query = "select * from orders")
 public class Order {
 
 	public Order() {
@@ -75,6 +76,14 @@ public class Order {
 	public void addOrderLine(OrderLine ol) {
 		if (ol != null)
 			this.orderLines.add(ol);
+	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "Order [getId()=" + getId() + ", getCreationTime()=" + getCreationTime() + ", getCustomer()="
+				+ getCustomer() + ", getOrderLines()=" + getOrderLines();
 	}
 
 	@Override

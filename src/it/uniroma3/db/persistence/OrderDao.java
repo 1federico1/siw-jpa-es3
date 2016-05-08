@@ -60,7 +60,7 @@ public class OrderDao implements Dao<Order>{
 	@SuppressWarnings("unchecked")
 	public List<Order> findAll() {
 		EntityManager em = this.emf.createEntityManager();
-		List<Order> result = em.createNamedQuery("Order.findAll").getResultList();
+		List<Order> result = em.createNativeQuery("Order.findAll").getResultList();
 		em.close();
 		return result;
 	}

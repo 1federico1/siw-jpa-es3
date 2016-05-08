@@ -8,6 +8,7 @@ import javax.persistence.Persistence;
 import it.uniroma3.db.persistence.AddressDao;
 import it.uniroma3.db.persistence.CustomerDao;
 import it.uniroma3.db.persistence.OrderDao;
+import it.uniroma3.db.persistence.ProductDao;
 
 public class Main {
 
@@ -18,24 +19,34 @@ public class Main {
 		CustomerDao customerDao = new CustomerDao(emf);
 		AddressDao addressDao = new AddressDao(emf);
 		OrderDao orderDao = new OrderDao(emf);
+		ProductDao productDao = new ProductDao(emf);
 
 		Product product = new Product("KRIDDIG", "A wonderful bla bla", 3.5F, "123456");
-
+		
+		Product p2 = new Product("prova", "descrizione", 0F, "222");
+		
 		Customer paperino = new Customer("paperino", "dePaperoni", "paperino@email.it");
 
 		Order order = new Order();
-		order.setCreationTime(new Date(System.currentTimeMillis()) );
+		order.setCreationTime(new Date(System.currentTimeMillis()));
 		
 		Order newOrder = new Order();
+		newOrder.setCreationTime(new Date(System.currentTimeMillis()));
+		
 		orderDao.save(newOrder);
 		
 		OrderLine line1 = new OrderLine(1, 2F);
-		line1.addProduct(product);
-
+		
+		product.addOrderLine(line1);
+		
 		OrderLine line2 = new OrderLine(2, 3F);
-
+		product.addOrderLine(line2);
+		
+		
 		order.addOrderLine(line1);
 		order.addOrderLine(line2);
+		
+		
 
 		Address address = new Address("via fasulla", "roma", "italy", "00118", "it");
 
@@ -50,6 +61,7 @@ public class Main {
 		customerDao.save(pippo);
 		customerDao.save(paperino);
 		customerDao.delete(paperino);
+
 		emf.close();
 
 	}
