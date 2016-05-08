@@ -15,18 +15,18 @@ public class ProductDao implements Dao<Product>{
 		this.emf = emf;
 	}
 
-	public void save(Product c) {
-		EntityManager em = emf.createEntityManager();
+	public void save(Product p) {
+		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		em.persist(c);
+		em.persist(p);
 		tx.commit();
 		em.close();
 
 	}
 
 	public Product findById(long id) {
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		Product c = em.find(Product.class, id);
@@ -35,22 +35,22 @@ public class ProductDao implements Dao<Product>{
 		return c;
 	}
 
-	public void delete(Product c) {
-		EntityManager em = emf.createEntityManager();
+	public void delete(Product p) {
+		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		Product toRemove = em.merge(c);
+		Product toRemove = em.merge(p);
 		em.remove(toRemove);
 		tx.commit();		
 		em.close();
 
 	}
 
-	public void update(Product c) {
-		EntityManager em = emf.createEntityManager();
+	public void update(Product p) {
+		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		em.merge(c);
+		em.merge(p);
 		tx.commit();
 		em.close();
 		
@@ -59,7 +59,7 @@ public class ProductDao implements Dao<Product>{
 
 	@SuppressWarnings("unchecked")
 	public List<Product> findAll() {
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = this.emf.createEntityManager();
 		List<Product> result = em.createNamedQuery("Product.findAll").getResultList();
 		em.close();
 		return result;

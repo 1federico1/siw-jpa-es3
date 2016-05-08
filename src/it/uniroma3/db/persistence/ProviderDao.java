@@ -15,18 +15,18 @@ public class ProviderDao implements Dao<Provider>{
 		this.emf = emf;
 	}
 
-	public void save(Provider c) {
-		EntityManager em = emf.createEntityManager();
+	public void save(Provider p) {
+		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		em.persist(c);
+		em.persist(p);
 		tx.commit();
 		em.close();
 
 	}
 
 	public Provider findById(long id) {
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		Provider c = em.find(Provider.class, id);
@@ -35,22 +35,22 @@ public class ProviderDao implements Dao<Provider>{
 		return c;
 	}
 
-	public void delete(Provider c) {
-		EntityManager em = emf.createEntityManager();
+	public void delete(Provider p) {
+		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		Provider toRemove = em.merge(c);
+		Provider toRemove = em.merge(p);
 		em.remove(toRemove);
 		tx.commit();		
 		em.close();
 
 	}
 
-	public void update(Provider c) {
-		EntityManager em = emf.createEntityManager();
+	public void update(Provider p) {
+		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		em.merge(c);
+		em.merge(p);
 		tx.commit();
 		em.close();
 		
@@ -59,7 +59,7 @@ public class ProviderDao implements Dao<Provider>{
 
 	@SuppressWarnings("unchecked")
 	public List<Provider> findAll() {
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = this.emf.createEntityManager();
 		List<Provider> result = em.createNamedQuery("Provider.findAll").getResultList();
 		em.close();
 		return result;

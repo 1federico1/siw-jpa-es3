@@ -15,18 +15,18 @@ public class OrderLineDao implements Dao<OrderLine>{
 		this.emf = emf;
 	}
 
-	public void save(OrderLine c) {
-		EntityManager em = emf.createEntityManager();
+	public void save(OrderLine ol) {
+		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		em.persist(c);
+		em.persist(ol);
 		tx.commit();
 		em.close();
 
 	}
 
 	public OrderLine findById(long id) {
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		OrderLine c = em.find(OrderLine.class, id);
@@ -35,22 +35,22 @@ public class OrderLineDao implements Dao<OrderLine>{
 		return c;
 	}
 
-	public void delete(OrderLine c) {
-		EntityManager em = emf.createEntityManager();
+	public void delete(OrderLine ol) {
+		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		OrderLine toRemove = em.merge(c);
+		OrderLine toRemove = em.merge(ol);
 		em.remove(toRemove);
 		tx.commit();		
 		em.close();
 
 	}
 
-	public void update(OrderLine c) {
-		EntityManager em = emf.createEntityManager();
+	public void update(OrderLine ol) {
+		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		em.merge(c);
+		em.merge(ol);
 		tx.commit();
 		em.close();
 		
@@ -59,7 +59,7 @@ public class OrderLineDao implements Dao<OrderLine>{
 
 	@SuppressWarnings("unchecked")
 	public List<OrderLine> findAll() {
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = this.emf.createEntityManager();
 		List<OrderLine> result = em.createNamedQuery("OrderLine.findAll").getResultList();
 		em.close();
 		return result;

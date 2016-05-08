@@ -9,24 +9,24 @@ import javax.persistence.EntityTransaction;
 import it.uniroma3.db.products.Order;
 
 public class OrderDao implements Dao<Order>{
-	private  EntityManagerFactory emf;
+	private EntityManagerFactory emf;
 
 	public OrderDao(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 
-	public void save(Order c) {
-		EntityManager em = emf.createEntityManager();
+	public void save(Order o) {
+		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		em.persist(c);
+		em.persist(o);
 		tx.commit();
 		em.close();
 
 	}
 
 	public Order findById(long id) {
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		Order c = em.find(Order.class, id);
@@ -35,11 +35,11 @@ public class OrderDao implements Dao<Order>{
 		return c;
 	}
 
-	public void delete(Order c) {
-		EntityManager em = emf.createEntityManager();
+	public void delete(Order o) {
+		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		Order toRemove = em.merge(c);
+		Order toRemove = em.merge(o);
 		em.remove(toRemove);
 		tx.commit();		
 		em.close();
@@ -47,7 +47,7 @@ public class OrderDao implements Dao<Order>{
 	}
 
 	public void update(Order o) {
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		em.merge(o);
@@ -59,7 +59,7 @@ public class OrderDao implements Dao<Order>{
 
 	@SuppressWarnings("unchecked")
 	public List<Order> findAll() {
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = this.emf.createEntityManager();
 		List<Order> result = em.createNamedQuery("Order.findAll").getResultList();
 		em.close();
 		return result;
