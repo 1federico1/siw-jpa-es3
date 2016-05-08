@@ -22,31 +22,27 @@ public class Main {
 		ProductDao productDao = new ProductDao(emf);
 
 		Product product = new Product("KRIDDIG", "A wonderful bla bla", 3.5F, "123456");
-		
+
 		Product p2 = new Product("prova", "descrizione", 0F, "222");
-		
+
 		Customer paperino = new Customer("paperino", "dePaperoni", "paperino@email.it");
 
 		Order order = new Order();
 		order.setCreationTime(new Date(System.currentTimeMillis()));
-		
+
 		Order newOrder = new Order();
 		newOrder.setCreationTime(new Date(System.currentTimeMillis()));
-		
+
 		orderDao.save(newOrder);
-		
+
 		OrderLine line1 = new OrderLine(1, 2F);
-		
-		product.addOrderLine(line1);
-		
+		line1.setProduct(product);
+
 		OrderLine line2 = new OrderLine(2, 3F);
-		product.addOrderLine(line2);
-		
-		
+		line2.setProduct(product);
+
 		order.addOrderLine(line1);
 		order.addOrderLine(line2);
-		
-		
 
 		Address address = new Address("via fasulla", "roma", "italy", "00118", "it");
 
