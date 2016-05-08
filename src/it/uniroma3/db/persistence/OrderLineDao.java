@@ -10,16 +10,14 @@ import it.uniroma3.db.products.OrderLine;
 
 public class OrderLineDao implements Dao<OrderLine>{
 	private  EntityManagerFactory emf;
-	private static EntityManager em;
-	private static EntityTransaction tx;
 
 	public OrderLineDao(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 
 	public void save(OrderLine c) {
-		em = emf.createEntityManager();
-		tx = em.getTransaction();
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		em.persist(c);
 		tx.commit();
@@ -28,8 +26,8 @@ public class OrderLineDao implements Dao<OrderLine>{
 	}
 
 	public OrderLine findById(long id) {
-		em = emf.createEntityManager();
-		tx = em.getTransaction();
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		OrderLine c = em.find(OrderLine.class, id);
 		tx.commit();
@@ -38,8 +36,8 @@ public class OrderLineDao implements Dao<OrderLine>{
 	}
 
 	public void delete(OrderLine c) {
-		em = emf.createEntityManager();
-		tx = em.getTransaction();
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		OrderLine toRemove = em.merge(c);
 		em.remove(toRemove);
@@ -49,8 +47,8 @@ public class OrderLineDao implements Dao<OrderLine>{
 	}
 
 	public void update(OrderLine c) {
-		em = emf.createEntityManager();
-		tx = em.getTransaction();
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		em.merge(c);
 		tx.commit();
@@ -61,17 +59,10 @@ public class OrderLineDao implements Dao<OrderLine>{
 
 	@SuppressWarnings("unchecked")
 	public List<OrderLine> findAll() {
-		em = emf.createEntityManager();
+		EntityManager em = emf.createEntityManager();
 		List<OrderLine> result = em.createNamedQuery("OrderLine.findAll").getResultList();
 		em.close();
 		return result;
 	}
 
-	public void closeEmf() {
-		emf.close();
-	}
-	
-	public EntityManager getEntityManager() {
-		return em = emf.createEntityManager();
-	}
 }

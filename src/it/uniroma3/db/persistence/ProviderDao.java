@@ -10,16 +10,14 @@ import it.uniroma3.db.products.Provider;
 
 public class ProviderDao implements Dao<Provider>{
 	private  EntityManagerFactory emf;
-	private static EntityManager em;
-	private static EntityTransaction tx;
 
 	public ProviderDao(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 
 	public void save(Provider c) {
-		em = emf.createEntityManager();
-		tx = em.getTransaction();
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		em.persist(c);
 		tx.commit();
@@ -28,8 +26,8 @@ public class ProviderDao implements Dao<Provider>{
 	}
 
 	public Provider findById(long id) {
-		em = emf.createEntityManager();
-		tx = em.getTransaction();
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		Provider c = em.find(Provider.class, id);
 		tx.commit();
@@ -38,8 +36,8 @@ public class ProviderDao implements Dao<Provider>{
 	}
 
 	public void delete(Provider c) {
-		em = emf.createEntityManager();
-		tx = em.getTransaction();
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		Provider toRemove = em.merge(c);
 		em.remove(toRemove);
@@ -49,8 +47,8 @@ public class ProviderDao implements Dao<Provider>{
 	}
 
 	public void update(Provider c) {
-		em = emf.createEntityManager();
-		tx = em.getTransaction();
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		em.merge(c);
 		tx.commit();
@@ -61,17 +59,9 @@ public class ProviderDao implements Dao<Provider>{
 
 	@SuppressWarnings("unchecked")
 	public List<Provider> findAll() {
-		em = emf.createEntityManager();
+		EntityManager em = emf.createEntityManager();
 		List<Provider> result = em.createNamedQuery("Provider.findAll").getResultList();
 		em.close();
 		return result;
-	}
-
-	public void closeEmf() {
-		emf.close();
-	}
-	
-	public EntityManager getEntityManager() {
-		return em = emf.createEntityManager();
 	}
 }

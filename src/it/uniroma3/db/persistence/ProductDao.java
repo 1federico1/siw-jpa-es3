@@ -10,16 +10,14 @@ import it.uniroma3.db.products.Product;
 
 public class ProductDao implements Dao<Product>{
 	private  EntityManagerFactory emf;
-	private static EntityManager em;
-	private static EntityTransaction tx;
 
 	public ProductDao(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 
 	public void save(Product c) {
-		em = emf.createEntityManager();
-		tx = em.getTransaction();
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		em.persist(c);
 		tx.commit();
@@ -28,8 +26,8 @@ public class ProductDao implements Dao<Product>{
 	}
 
 	public Product findById(long id) {
-		em = emf.createEntityManager();
-		tx = em.getTransaction();
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		Product c = em.find(Product.class, id);
 		tx.commit();
@@ -38,8 +36,8 @@ public class ProductDao implements Dao<Product>{
 	}
 
 	public void delete(Product c) {
-		em = emf.createEntityManager();
-		tx = em.getTransaction();
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		Product toRemove = em.merge(c);
 		em.remove(toRemove);
@@ -49,8 +47,8 @@ public class ProductDao implements Dao<Product>{
 	}
 
 	public void update(Product c) {
-		em = emf.createEntityManager();
-		tx = em.getTransaction();
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		em.merge(c);
 		tx.commit();
@@ -61,17 +59,10 @@ public class ProductDao implements Dao<Product>{
 
 	@SuppressWarnings("unchecked")
 	public List<Product> findAll() {
-		em = emf.createEntityManager();
+		EntityManager em = emf.createEntityManager();
 		List<Product> result = em.createNamedQuery("Product.findAll").getResultList();
 		em.close();
 		return result;
 	}
 
-	public void closeEmf() {
-		emf.close();
-	}
-	
-	public EntityManager getEntityManager() {
-		return em = emf.createEntityManager();
-	}
 }
