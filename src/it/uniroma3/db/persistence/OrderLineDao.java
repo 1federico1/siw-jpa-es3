@@ -8,23 +8,13 @@ import javax.persistence.EntityTransaction;
 
 import it.uniroma3.db.products.OrderLine;
 
-public class OrderLineDao implements Dao<OrderLine>{
-	private  EntityManagerFactory emf;
+public class OrderLineDao extends Dao<OrderLine> {
 
 	public OrderLineDao(EntityManagerFactory emf) {
-		this.emf = emf;
+		super(emf);
 	}
 
-	public void save(OrderLine ol) {
-		EntityManager em = this.emf.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		em.persist(ol);
-		tx.commit();
-		em.close();
-
-	}
-
+	@Override
 	public OrderLine findById(long id) {
 		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -35,28 +25,7 @@ public class OrderLineDao implements Dao<OrderLine>{
 		return c;
 	}
 
-	public void delete(OrderLine ol) {
-		EntityManager em = this.emf.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		OrderLine toRemove = em.merge(ol);
-		em.remove(toRemove);
-		tx.commit();		
-		em.close();
-
-	}
-
-	public void update(OrderLine ol) {
-		EntityManager em = this.emf.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		em.merge(ol);
-		tx.commit();
-		em.close();
-		
-
-	}
-
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<OrderLine> findAll() {
 		EntityManager em = this.emf.createEntityManager();

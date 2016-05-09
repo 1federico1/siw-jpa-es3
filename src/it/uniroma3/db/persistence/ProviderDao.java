@@ -8,23 +8,13 @@ import javax.persistence.EntityTransaction;
 
 import it.uniroma3.db.products.Provider;
 
-public class ProviderDao implements Dao<Provider>{
-	private  EntityManagerFactory emf;
+public class ProviderDao extends Dao<Provider> {
 
 	public ProviderDao(EntityManagerFactory emf) {
-		this.emf = emf;
+		super(emf);
 	}
 
-	public void save(Provider p) {
-		EntityManager em = this.emf.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		em.persist(p);
-		tx.commit();
-		em.close();
-
-	}
-
+	@Override
 	public Provider findById(long id) {
 		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -35,28 +25,7 @@ public class ProviderDao implements Dao<Provider>{
 		return c;
 	}
 
-	public void delete(Provider p) {
-		EntityManager em = this.emf.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		Provider toRemove = em.merge(p);
-		em.remove(toRemove);
-		tx.commit();		
-		em.close();
-
-	}
-
-	public void update(Provider p) {
-		EntityManager em = this.emf.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		em.merge(p);
-		tx.commit();
-		em.close();
-		
-
-	}
-
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Provider> findAll() {
 		EntityManager em = this.emf.createEntityManager();

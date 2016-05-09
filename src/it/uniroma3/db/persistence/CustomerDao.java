@@ -8,23 +8,13 @@ import javax.persistence.EntityTransaction;
 
 import it.uniroma3.db.products.Customer;
 
-public class CustomerDao implements Dao<Customer>{
-	private EntityManagerFactory emf;
+public class CustomerDao extends Dao<Customer> {
 
 	public CustomerDao(EntityManagerFactory emf) {
-		this.emf = emf;
+		super(emf);
 	}
 
-	public void save(Customer c) {
-		EntityManager em = this.emf.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		em.persist(c);
-		tx.commit();
-		em.close();
-
-	}
-
+	@Override
 	public Customer findById(long id) {
 		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -35,28 +25,7 @@ public class CustomerDao implements Dao<Customer>{
 		return c;
 	}
 
-	public void delete(Customer c) {
-		EntityManager em = this.emf.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		Customer toRemove = em.merge(c);
-		em.remove(toRemove);
-		tx.commit();		
-		em.close();
-
-	}
-
-	public void update(Customer c) {
-		EntityManager em = this.emf.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		em.merge(c);
-		tx.commit();
-		em.close();
-		
-
-	}
-
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Customer> findAll() {
 		EntityManager em = this.emf.createEntityManager();
@@ -64,9 +33,4 @@ public class CustomerDao implements Dao<Customer>{
 		em.close();
 		return result;
 	}
-
-	public void closeEmf() {
-		emf.close();
-	}
-
 }
