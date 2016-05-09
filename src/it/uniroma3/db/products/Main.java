@@ -28,10 +28,10 @@ public class Main {
 		Customer paperino = new Customer("paperino", "dePaperoni", "paperino@email.it");
 
 		Order order = new Order();
-		order.setCreationTime(new Date(System.currentTimeMillis()));
+		order.setCreationTime(new Date());
 
 		Order newOrder = new Order();
-		newOrder.setCreationTime(new Date(System.currentTimeMillis()));
+		newOrder.setCreationTime(new Date());
 
 		orderDao.save(newOrder);
 
